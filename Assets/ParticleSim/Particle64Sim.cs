@@ -22,7 +22,7 @@ namespace uFlugoop {
     public GameObject[] spawnedVisualizers;
 
     void Start() {
-      Texture2D particleTex = GenerateParticles(128);
+      Texture2D particleTex = GenerateParticles(64);
       InitializeParticleSystem(particleTex);
 
       MeshRenderer renderer = GetComponent<MeshRenderer>();
@@ -137,7 +137,7 @@ namespace uFlugoop {
         farthestSquareDist = testSquareDist;
       }
 
-      float smallestContainingSphereRadius = Vector3.Distance(farthestSpherePos, avgPosition) + farthestSphere.r;
+      float smallestContainingSphereRadius = Vector3.Distance(farthestSpherePos, avgPosition) + (farthestSphere.r);
 
       return new Sphere(avgPosition, smallestContainingSphereRadius);
     }

@@ -36,6 +36,7 @@
 				return o;
 			}
 
+			#define LOG_2_PARTICLE_TEX_WIDTH 7-1 // for tex width 64
 			sampler2D _ParticleTex;
 			sampler2D _HitLinkTex;
 			sampler2D _MissLinkTex;
@@ -93,7 +94,7 @@
 
 			Node GetRootNode() {
 				Node node;
-				node.mip = 7;
+				node.mip = LOG_2_PARTICLE_TEX_WIDTH;
 				node.uv = float2(0.5, 0.5);
         node.sphere = getSphere(node.uv, node.mip);
 				return node;
@@ -123,17 +124,9 @@
         float r = sphere.w;
         return dot(b, b) < r * r;
       }
-
-      #define NUM_ITERATIONS 64
-
+			
 			float4 raycastSphericQuadtree(float3 pos, float3 dir) {
-				/*Node node = GetRootNode();
-				bool hit;
-				float3 hitFromRayPos = RaycastSphere(node.sphere, pos, dir, hit);
-        pos += hitFromRayPos;*/
-
         Node node = GetRootNode();
-        
         bool hit;
         bool hitLeaf = false;
         while (!isNull(node)) {
