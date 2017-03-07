@@ -9,12 +9,14 @@ namespace uFlugoop {
 		/// using the given texWidth as the base texture width. (Must be power-of-two.)
 		/// </summary>
 		public static void CreateLinkTextures(int texWidth, out Texture2D hitLinkTexture, out Texture2D missLinkTexture) {
-			hitLinkTexture = new Texture2D(texWidth, texWidth);
+			hitLinkTexture = new Texture2D(texWidth, texWidth, TextureFormat.RGBAFloat, true);
 			hitLinkTexture.filterMode = FilterMode.Point;
-			missLinkTexture = new Texture2D(texWidth, texWidth);
+      hitLinkTexture.alphaIsTransparency = false;
+      missLinkTexture = new Texture2D(texWidth, texWidth, TextureFormat.RGBAFloat, true);
 			missLinkTexture.filterMode = FilterMode.Point;
+      missLinkTexture.alphaIsTransparency = false;
 
-			QuadMipLinkTurtle linkWalker = new QuadMipLinkTurtle(texWidth);
+      QuadMipLinkTurtle linkWalker = new QuadMipLinkTurtle(texWidth);
 			bool stillWalking = true;
 			do {
 				stillWalking = linkWalker.Step();
@@ -186,7 +188,7 @@ namespace uFlugoop {
 					this.curMissLink = missLink;
 					this.missLinkPixels[mipLevel][x + mipWidths[mipLevel] * y] = missLink;
 				}
-				catch (System.IndexOutOfRangeException e) {
+				catch (System.IndexOutOfRangeException) {
 					Debug.LogError("tried to index for mipLevel: " + mipLevel + " and x " + x + " and y " + y);
 				}
 			}
